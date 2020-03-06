@@ -1,0 +1,103 @@
+name,conditions_serialized,template_html,file_name,add_timestamp,secret_key,profile_type,fields_list,field_separate,field_around,include_header,status_condition,change_status,created_from,created_to,order_id_from,order_id_to,export_duplicate,object,status,file_type,run_mode,store_ids
+'Canceled Orders','{"type":"Magento\\CatalogRule\\Model\\Rule\\Condition\\Combine","attribute":null,"operator":null,"value":true,"is_value_processed":null,"aggregator":"all"}','<?xml version="1.0" encoding="utf-8" ?>
+<rss version="2.0" xmlns:g="http://base.google.com/ns/1.0">
+    <channel>
+        <title>Sale Order</title>
+          {% for order in collection %}
+      		<order>
+                <increment_id><![CDATA[{{ order.increment_id }}]]></increment_id>
+                <store_name><![CDATA[{{ order.store_name }}]]></store_name>
+                <created_at><![CDATA[{{ order.created_at }}]]></created_at>
+                <bill_to_name><![CDATA[{{ order.billingAddress.firstname }} {{ order.billingAddress.lastname }}]]></bill_to_name>
+                <ship_to_name><![CDATA[{{ order.shippingAddress.firstname }} {{ order.shippingAddress.lastname }}]]></ship_to_name>
+                <status><![CDATA[{{ order.status }}]]></status>
+                <billing_address><![CDATA[{{ order.billingAddress.street }} {{ order.billingAddress.city }} {{ order.billingAddress.postcode }}]]></billing_address>
+                <shipping_address><![CDATA[{{ order.shippingAddress.street }} {{ order.shippingAddress.city }} {{ order.shippingAddress.postcode }}]]></shipping_address>
+                <shipping_description><![CDATA[{{ order.shipping_description }}]]></shipping_description>
+                <customer_email><![CDATA[{{ order.customer_email }}]]></customer_email>
+                <customer_group><![CDATA[{{ order.customer_group }}]]></customer_group>
+                <base_shipping_incl_tax><![CDATA[{{ order.base_shipping_incl_tax }}]]></base_shipping_incl_tax>
+                <customer_name><![CDATA[{{ order.customer_firstname }} {{ order.customer_lastname }}]]></customer_name>
+                <payment_method><![CDATA[{{ order.payment_method }}]]></payment_method>
+                <order_total>
+                	<subtotal><![CDATA[{{ order.subtotal }}]]></subtotal>
+                    <base_grand_total><![CDATA[{{ order.base_grand_total }}]]></base_grand_total>
+                    <grand_total><![CDATA[{{ order.grand_total }}]]></grand_total>
+                    <total_paid><![CDATA[{{ order.total_paid }}]]></total_paid>
+                    <total_refunded><![CDATA[{{ order.total_refunded }}]]></total_refunded>
+                    <total_due><![CDATA[{{ order.total_due }}]]></total_due>
+              	</order_total>
+              	<items>
+                  {% for item in order.items %}
+                    <item>
+                      <name><![CDATA[{{ item.name }}]]></name>
+                      <sku><![CDATA[{{ item.sku }}]]></sku>
+                      <status><![CDATA[{{ item.status }}]]></status>
+                      <original_price><![CDATA[{{ item.original_price }}]]></original_price>
+                      <price><![CDATA[{{ item.price }}]]></price>
+                      <qty_ordered><![CDATA[{{ item.qty_ordered }}]]></qty_ordered>
+                      <qty_invoiced><![CDATA[{{ item.qty_invoiced }}]]></qty_invoiced>
+                      <qty_refunded><![CDATA[{{ item.qty_refunded }}]]></qty_refunded>
+                      <base_row_total_incl_tax><![CDATA[{{ item.base_row_total_incl_tax }}]]></base_row_total_incl_tax>
+                      <tax_amount><![CDATA[{{ item.tax_amount }}]]></tax_amount>
+                      <tax_percent><![CDATA[{{ item.tax_percent }}]]></tax_percent>
+                      <discount_amount><![CDATA[{{ item.discount_amount }}]]></discount_amount>
+                      <row_total><![CDATA[{{ item.row_total }}]]></row_total>
+                    </item>
+                  {% endfor %}
+                </items>
+      		</order>
+          {% endfor %}
+    </channel>
+</rss>',canceled_orders,0,5fe3a02a02f6bcaee201bcd62b3877d2,order,,,,,,,,,0,0,1,order,1,xml,0,0
+'Pending Orders','{"type":"Magento\\CatalogRule\\Model\\Rule\\Condition\\Combine","attribute":null,"operator":null,"value":true,"is_value_processed":null,"aggregator":"all"}','<?xml version="1.0" encoding="utf-8" ?>
+<rss version="2.0" xmlns:g="http://base.google.com/ns/1.0">
+    <channel>
+        <title>Sale Order</title>
+          {% for order in collection %}
+      		<order>
+                <increment_id><![CDATA[{{ order.increment_id }}]]></increment_id>
+                <store_name><![CDATA[{{ order.store_name }}]]></store_name>
+                <created_at><![CDATA[{{ order.created_at }}]]></created_at>
+                <bill_to_name><![CDATA[{{ order.billingAddress.firstname }} {{ order.billingAddress.lastname }}]]></bill_to_name>
+                <ship_to_name><![CDATA[{{ order.shippingAddress.firstname }} {{ order.shippingAddress.lastname }}]]></ship_to_name>
+                <status><![CDATA[{{ order.status }}]]></status>
+                <billing_address><![CDATA[{{ order.billingAddress.street }} {{ order.billingAddress.city }} {{ order.billingAddress.postcode }}]]></billing_address>
+                <shipping_address><![CDATA[{{ order.shippingAddress.street }} {{ order.shippingAddress.city }} {{ order.shippingAddress.postcode }}]]></shipping_address>
+                <shipping_description><![CDATA[{{ order.shipping_description }}]]></shipping_description>
+                <customer_email><![CDATA[{{ order.customer_email }}]]></customer_email>
+                <customer_group><![CDATA[{{ order.customer_group }}]]></customer_group>
+                <base_shipping_incl_tax><![CDATA[{{ order.base_shipping_incl_tax }}]]></base_shipping_incl_tax>
+                <customer_name><![CDATA[{{ order.customer_firstname }} {{ order.customer_lastname }}]]></customer_name>
+                <payment_method><![CDATA[{{ order.payment_method }}]]></payment_method>
+                <order_total>
+                	<subtotal><![CDATA[{{ order.subtotal }}]]></subtotal>
+                    <base_grand_total><![CDATA[{{ order.base_grand_total }}]]></base_grand_total>
+                    <grand_total><![CDATA[{{ order.grand_total }}]]></grand_total>
+                    <total_paid><![CDATA[{{ order.total_paid }}]]></total_paid>
+                    <total_refunded><![CDATA[{{ order.total_refunded }}]]></total_refunded>
+                    <total_due><![CDATA[{{ order.total_due }}]]></total_due>
+              	</order_total>
+              	<items>
+                  {% for item in order.items %}
+                    <item>
+                      <name><![CDATA[{{ item.name }}]]></name>
+                      <sku><![CDATA[{{ item.sku }}]]></sku>
+                      <status><![CDATA[{{ item.status }}]]></status>
+                      <original_price><![CDATA[{{ item.original_price }}]]></original_price>
+                      <price><![CDATA[{{ item.price }}]]></price>
+                      <qty_ordered><![CDATA[{{ item.qty_ordered }}]]></qty_ordered>
+                      <qty_invoiced><![CDATA[{{ item.qty_invoiced }}]]></qty_invoiced>
+                      <qty_refunded><![CDATA[{{ item.qty_refunded }}]]></qty_refunded>
+                      <base_row_total_incl_tax><![CDATA[{{ item.base_row_total_incl_tax }}]]></base_row_total_incl_tax>
+                      <tax_amount><![CDATA[{{ item.tax_amount }}]]></tax_amount>
+                      <tax_percent><![CDATA[{{ item.tax_percent }}]]></tax_percent>
+                      <discount_amount><![CDATA[{{ item.discount_amount }}]]></discount_amount>
+                      <row_total><![CDATA[{{ item.row_total }}]]></row_total>
+                    </item>
+                  {% endfor %}
+                </items>
+      		</order>
+          {% endfor %}
+    </channel>
+</rss>',pending_orders,0,40717838963f4190f5152f2ca47dcb63,order,,,,,pending,,,,0,0,1,order,1,xml,0,0

@@ -1,6 +1,6 @@
 {
     "name": "btn114/module-order-export-sample-data",
-    "description": "Magento 2 Free Shipping Bar Sample Data Extension",
+    "description": "Magento 2 Order Export Sample Data Extension",
     "require": {
         "mageplaza/module-core": "^1.4.4"
     },
@@ -20,7 +20,7 @@
             "registration.php"
         ],
         "psr-4": {
-            "Mageplaza\\FreeShippingBarSampleData\\": ""
+            "Mageplaza\\OrderExportSampleData\\": ""
         }
     }
 }

@@ -439,3 +439,426 @@ name,conditions_serialized,template_html,file_name,add_timestamp,secret_key,prof
     {% endfor %}
 ]
 }',invoice_json,0,765ee82d52e18e2d4f60a95a658e24b5,invoice,'{"1540893649080_80":{"col_val":"{{ invoice.increment_id }}"},"1540893657566_566":{"col_val":"{{ invoice.order_id }}"},"1540893671326_326":{"col_val":"{{ invoice.order_date }}"},"1540893754806_806":{"col_val":"{{ invoice.created_at }}"},"1540893762149_149":{"col_val":"{{ invoice.store_name }}"},"1540893777239_239":{"col_val":"{{ invoice.created_at }}"},"1540894096661_661":{"col_val":"{{ invoice.customer_firstname }}"},"1540894137596_596":{"col_val":"{{ invoice.customer_lasttname }}"},"1540894155805_805":{"col_val":"{{ invoice.customer_email }}"},"1540894234290_290":{"col_val":"{{ invoice.customer_group }}"},"1540894243101_101":{"col_val":"{{ invoice.billingAddress.firstname }}"},"1540894254635_635":{"col_val":"{{ invoice.billingAddress.lastname }}"},"1540894273292_292":{"col_val":"{{ invoice.billingAddress.street }}"},"1540894292410_410":{"col_val":"{{ invoice.billingAddress.city }}"},"1540894303282_282":{"col_val":"{{ invoice.billingAddress.postcode }}"},"1540894390760_760":{"col_val":"{{ invoice.billingAddress.telephone }}"},"1540894323146_146":{"col_val":"{{ invoice.shippingAddress.firstname }}"},"1540894339586_586":{"col_val":"{{ invoice.shippingAddress.lastname }}"},"1540894349301_301":{"col_val":"{{ invoice.shippingAddress.street }}"},"1540894361930_930":{"col_val":"{{ invoice.shippingAddress.city }}"},"1540894368163_163":{"col_val":"{{ invoice.shippingAddress.postcode }}"},"1540894381689_689":{"col_val":"{{ invoice.shippingAddress.telephone }}"},"1540894412449_449":{"col_val":"{{ invoice.payment_method }}"},"1540894471908_908":{"col_val":"{{ invoice.shipping_description }}"},"1540894698772_772":{"col_val":"{{ invoice.base_shipping_incl_tax }}"},"1540894727315_315":{"col_val":"{{ invoice.subtotal }}"},"1540894736608_608":{"col_val":"{{ invoice.tax_amount }}"},"1540894759127_127":{"col_val":"{{ invoice.grand_total }}"},"1540894764416_416":{"col_val":""}}',,,,,,,,0,0,1,invoice,1,json,0,0
+'Creditmemo XML','{"type":"Magento\\CatalogRule\\Model\\Rule\\Condition\\Combine","attribute":null,"operator":null,"value":true,"is_value_processed":null,"aggregator":"all"}','<?xml version="1.0" encoding="utf-8" ?>
+<rss version="2.0" xmlns:g="http://base.google.com/ns/1.0">
+    <channel>
+        <title>Sale Order Credit Memos</title>
+        {% for creditmemo in collection %}
+            <creditmemo>
+                <increment_id><![CDATA[{{ creditmemo.increment_id }}]]></increment_id>
+                <order><![CDATA[{{ creditmemo.order_id }}]]></order>
+                <created_at><![CDATA[{{ creditmemo.created_at }}]]></created_at>
+                <order_date><![CDATA[{{ creditmemo.order_date }}]]></order_date>
+                <order_status><![CDATA[{{ creditmemo.order_status }}]]></order_status>
+                <store_name><![CDATA[{{ creditmemo.store_name }}]]></store_name>
+                <customer_name><![CDATA[{{ creditmemo.customer_firstname }} {{ shipment.customer_lastname }}]]></customer_name>
+                <customer_email><![CDATA[{{ creditmemo.customer_email }}]]></customer_email>
+                <customer_group><![CDATA[{{ creditmemo.customer_group }}]]></customer_group>
+                <bill_to_name><![CDATA[{{ creditmemo.billingAddress.firstname }} {{ creditmemo.billingAddress.lastname }}]]></bill_to_name>
+                <billing_address><![CDATA[{{ creditmemo.billingAddress.street }} {{ creditmemo.billingAddress.city }} {{ creditmemo.billingAddress.postcode }}]]></billing_address>
+                <billing_telephone><![CDATA[{{ creditmemo.billingAddress.telephone }}]]></billing_telephone>
+                <ship_to_name><![CDATA[{{ creditmemo.shippingAddress.firstname }} {{ creditmemo.shippingAddress.lastname }}]]></ship_to_name>
+                <shipping_address><![CDATA[{{ creditmemo.shippingAddress.street }} {{ creditmemo.shippingAddress.city }} {{ creditmemo.shippingAddress.postcode }}]]></shipping_address>
+                <shipping_telephone><![CDATA[{{ creditmemo.shippingAddress.telephone }}]]></shipping_telephone>
+                <payment_method><![CDATA[{{ creditmemo.payment_method }}]]></payment_method>
+                <shipping_description><![CDATA[{{ creditmemo.shipping_description }}]]></shipping_description>
+                <base_shipping_incl_tax><![CDATA[{{ creditmemo.base_shipping_incl_tax }}]]></base_shipping_incl_tax>
+                <memo_total>
+                    <subtotal><![CDATA[{{ creditmemo.subtotal }}]]></subtotal>
+                    <base_shipping_incl_tax><![CDATA[{{ creditmemo.base_shipping_incl_tax }}]]></base_shipping_incl_tax>
+                    <adjustment><![CDATA[{{ creditmemo.adjustment }}]]></adjustment>
+                    <adjustment_negative><![CDATA[{{ creditmemo.adjustment_negative }}]]></adjustment_negative>
+                    <tax_amount><![CDATA[{{ creditmemo.tax_amount }}]]></tax_amount>
+                    <grand_total><![CDATA[{{ creditmemo.grand_total }}]]></grand_total>
+                </memo_total>
+                <items>
+                    {% for item in creditmemo.items %}
+                        <item>
+                            <name><![CDATA[{{ item.name }}]]></name>
+                            <sku><![CDATA[{{ item.sku }}]]></sku>
+                            <price><![CDATA[{{ item.price }}]]></price>
+                            <qty><![CDATA[{{ item.qty }}{{ item.qty }}]]></qty>
+                            <base_row_total><![CDATA[{{ item.base_row_total }}]]></base_row_total>
+                            <tax_amount><![CDATA[{{ item.tax_amount }}]]></tax_amount>
+                            <discount_amount><![CDATA[{{ item.discount_amount }}]]></discount_amount>
+                            <row_total><![CDATA[{{ item.row_total }}]]></row_total>
+                        </item>
+                    {% endfor %}
+                </items>
+            </creditmemo>
+        {% endfor %}
+    </channel>
+</rss>',creditmemo_xml,0,fc90664f33af3268189e20710c94887b,creditmemo,,,,,,,,,0,0,1,creditmemo,1,xml,0,0
+'Creditmemo CSV','{"type":"Magento\\CatalogRule\\Model\\Rule\\Condition\\Combine","attribute":null,"operator":null,"value":true,"is_value_processed":null,"aggregator":"all"}','',creditmemo_csv,0,d682d5622fe551773dd546af4d93bd51,creditmemo,'{"1540900677032_32":{"col_name":"Increment Id","col_type":"attribute","col_attr_val":"increment_id","col_pattern_val":"","col_val":"{{ creditmemo.increment_id }}"},"1540900685438_438":{"col_name":"Order Id","col_type":"attribute","col_attr_val":"order_id","col_pattern_val":"","col_val":"{{ creditmemo.order_id }}"},"1540900693672_672":{"col_name":"Created At","col_type":"attribute","col_attr_val":"created_at","col_pattern_val":"","col_val":"{{ creditmemo.created_at }}"},"1540900700421_421":{"col_name":"Order Date","col_type":"attribute","col_attr_val":"order_date","col_pattern_val":"","col_val":"{{ creditmemo.order_date }}"},"1540900706208_208":{"col_name":"Order Status","col_type":"attribute","col_attr_val":"order_status","col_pattern_val":"","col_val":"{{ creditmemo.order_status }}"},"1540900802104_104":{"col_name":"Store Name","col_type":"attribute","col_attr_val":"store_name","col_pattern_val":"","col_val":"{{ creditmemo.store_name }}"},"1540900820079_79":{"col_name":"Customer Firstname","col_type":"attribute","col_attr_val":"customer_firstname","col_pattern_val":"","col_val":"{{ creditmemo.customer_firstname }}"},"1540900828373_373":{"col_name":"Customer Lasttname","col_type":"attribute","col_attr_val":"customer_lasttname","col_pattern_val":"","col_val":"{{ creditmemo.customer_lasttname }}"},"1540900834151_151":{"col_name":"Customer Email","col_type":"attribute","col_attr_val":"customer_email","col_pattern_val":"","col_val":"{{ creditmemo.customer_email }}"},"1540900842414_414":{"col_name":"Customer Group","col_type":"attribute","col_attr_val":"customer_group","col_pattern_val":"","col_val":"{{ creditmemo.customer_group }}"},"1540900860261_261":{"col_name":"BillingAddress.Firstname","col_type":"attribute","col_attr_val":"billingAddress.firstname","col_pattern_val":"","col_val":"{{ creditmemo.billingAddress.firstname }}"},"1540900874993_993":{"col_name":"BillingAddress.Lastname","col_type":"attribute","col_attr_val":"billingAddress.lastname","col_pattern_val":"","col_val":"{{ creditmemo.billingAddress.lastname }}"},"1540900939415_415":{"col_name":"BillingAddress.Street","col_type":"attribute","col_attr_val":"billingAddress.street","col_pattern_val":"","col_val":"{{ creditmemo.billingAddress.street }}"},"1540900946868_868":{"col_name":"BillingAddress.City","col_type":"attribute","col_attr_val":"billingAddress.city","col_pattern_val":"","col_val":"{{ creditmemo.billingAddress.city }}"},"1540900952484_484":{"col_name":"BillingAddress.Postcode","col_type":"attribute","col_attr_val":"billingAddress.postcode","col_pattern_val":"","col_val":"{{ creditmemo.billingAddress.postcode }}"},"1540900960743_743":{"col_name":"BillingAddress.Telephone","col_type":"attribute","col_attr_val":"billingAddress.telephone","col_pattern_val":"","col_val":"{{ creditmemo.billingAddress.telephone }}"},"1540900966749_749":{"col_name":"ShippingAddress.Firstname","col_type":"attribute","col_attr_val":"shippingAddress.firstname","col_pattern_val":"","col_val":"{{ creditmemo.shippingAddress.firstname }}"},"1540901004563_563":{"col_name":"ShippingAddress.Lastname","col_type":"attribute","col_attr_val":"shippingAddress.lastname","col_pattern_val":"","col_val":"{{ creditmemo.shippingAddress.lastname }}"},"1540901016083_83":{"col_name":"ShippingAddress.Street","col_type":"attribute","col_attr_val":"shippingAddress.street","col_pattern_val":"","col_val":"{{ creditmemo.shippingAddress.street }}"},"1540901024345_345":{"col_name":"ShippingAddress.City","col_type":"attribute","col_attr_val":"shippingAddress.city","col_pattern_val":"","col_val":"{{ creditmemo.shippingAddress.city }}"},"1540901034165_165":{"col_name":"ShippingAddress.Postcode","col_type":"attribute","col_attr_val":"shippingAddress.postcode","col_pattern_val":"","col_val":"{{ creditmemo.shippingAddress.postcode }}"},"1540901043259_259":{"col_name":"ShippingAddress.Telephone","col_type":"attribute","col_attr_val":"shippingAddress.telephone","col_pattern_val":"","col_val":"{{ creditmemo.shippingAddress.telephone }}"},"1540901052582_582":{"col_name":"Payment Method","col_type":"attribute","col_attr_val":"payment_method","col_pattern_val":"","col_val":"{{ creditmemo.payment_method }}"},"1540901056600_600":{"col_name":"Shipping Description","col_type":"attribute","col_attr_val":"shipping_description","col_pattern_val":"","col_val":"{{ creditmemo.shipping_description }}"},"1540901065753_753":{"col_name":"Base Shipping Incl Tax","col_type":"attribute","col_attr_val":"base_shipping_incl_tax","col_pattern_val":"","col_val":"{{ creditmemo.base_shipping_incl_tax }}"},"1540901092748_748":{"col_name":"Subtotal","col_type":"attribute","col_attr_val":"subtotal","col_pattern_val":"","col_val":"{{ creditmemo.subtotal }}"},"1540901103946_946":{"col_name":"Adjustment","col_type":"attribute","col_attr_val":"adjustment","col_pattern_val":"","col_val":"{{ creditmemo.adjustment }}"},"1540901362585_585":{"col_name":"Adjustment Negative","col_type":"attribute","col_attr_val":"adjustment_negative","col_pattern_val":"","col_val":"{{ creditmemo.adjustment_negative }}"},"1540901375766_766":{"col_name":"Tax Amount","col_type":"attribute","col_attr_val":"tax_amount","col_pattern_val":"","col_val":"{{ creditmemo.tax_amount }}"},"1540901381360_360":{"col_name":"Grand Total","col_type":"attribute","col_attr_val":"grand_total","col_pattern_val":"","col_val":"{{ creditmemo.grand_total }}"},"1540901389638_638":{"col_name":"","col_type":"item","col_attr_val":"0","col_pattern_val":"","col_val":"","items":{"1540901392569_569":{"name":"Name","value":"name"},"1540901398883_883":{"name":"Sku","value":"sku"},"1540901403955_955":{"name":"Price","value":"price"},"1540901412895_895":{"name":"Qty","value":"qty"},"1540901423042_42":{"name":"Base Row_total","value":"base_row_total"},"1540901430401_401":{"name":"Tax Amount","value":"tax_amount"},"1540901439443_443":{"name":"Discount Amount","value":"discount_amount"},"1540901445514_514":{"name":"Row Total","value":"row_total"}}}}','comma','quotes',1,,,,,0,0,1,creditmemo,1,csv,0,0
+'Creditmemo Excel XML','{"type":"Magento\\CatalogRule\\Model\\Rule\\Condition\\Combine","attribute":null,"operator":null,"value":true,"is_value_processed":null,"aggregator":"all"}','<?xml version="1.0"?><?mso-application progid="Excel.Sheet"?>
+<Workbook xmlns="urn:schemas-microsoft-com:office:spreadsheet" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:x="urn:schemas-microsoft-com:office:excel" xmlns:x2="http://schemas.microsoft.com/office/excel/2003/xml" xmlns:ss="urn:schemas-microsoft-com:office:spreadsheet" xmlns:o="urn:schemas-microsoft-com:office:office" xmlns:html="http://www.w3.org/TR/REC-html40" xmlns:c="urn:schemas-microsoft-com:office:component:spreadsheet">
+<OfficeDocumentSettings xmlns="urn:schemas-microsoft-com:office:office"></OfficeDocumentSettings>
+<ExcelWorkbook xmlns="urn:schemas-microsoft-com:office:excel"></ExcelWorkbook>
+<Worksheet ss:Name="sales_order_creditmemo_grid.xml">
+    <Table>
+        <Row>
+            <Cell>
+                <Data ss:Type="String">Credit Memo</Data>
+            </Cell>
+            <Cell>
+                <Data ss:Type="String">Created</Data>
+            </Cell>
+            <Cell>
+                <Data ss:Type="String">Order</Data>
+            </Cell>
+            <Cell>
+                <Data ss:Type="String">Order Date</Data>
+            </Cell>
+            <Cell>
+                <Data ss:Type="String">Bill-to Name</Data>
+            </Cell>
+            <Cell>
+                <Data ss:Type="String">Status</Data>
+            </Cell>
+            <Cell>
+                <Data ss:Type="String">Refunded</Data>
+            </Cell>
+            <Cell>
+                <Data ss:Type="String">Order Status</Data>
+            </Cell>
+            <Cell>
+                <Data ss:Type="String">Purchased From</Data>
+            </Cell>
+            <Cell>
+                <Data ss:Type="String">Billing Address</Data>
+            </Cell>
+            <Cell>
+                <Data ss:Type="String">Shipping Address</Data>
+            </Cell>
+            <Cell>
+                <Data ss:Type="String">Customer Name</Data>
+            </Cell>
+            <Cell>
+                <Data ss:Type="String">Email</Data>
+            </Cell>
+            <Cell>
+                <Data ss:Type="String">Customer Group</Data>
+            </Cell>
+            <Cell>
+                <Data ss:Type="String">Payment Method</Data>
+            </Cell>
+            <Cell>
+                <Data ss:Type="String">Shipping Information</Data>
+            </Cell>
+            <Cell>
+                <Data ss:Type="String">Subtotal</Data>
+            </Cell>
+            <Cell>
+                <Data ss:Type="String">Shipping &amp; Handling</Data>
+            </Cell>
+            <Cell>
+                <Data ss:Type="String">Adjustment Refund</Data>
+            </Cell>
+            <Cell>
+                <Data ss:Type="String">Adjustment Fee</Data>
+            </Cell>
+            <Cell>
+                <Data ss:Type="String">Grand Total</Data>
+            </Cell>
+        </Row>
+        {% for creditmemo in collection %}
+            <Row>
+                <Cell>
+                    <Data ss:Type="String"><![CDATA[{{ creditmemo.increment_id }}]]></Data>
+                </Cell>
+                <Cell>
+                    <Data ss:Type="String"><![CDATA[{{ creditmemo.created_at }}]]></Data>
+                </Cell>
+                <Cell>
+                    <Data ss:Type="String"><![CDATA[{{ creditmemo.order_id }}]]></Data>
+                </Cell>
+                <Cell>
+                    <Data ss:Type="String"><![CDATA[{{ creditmemo.order_date }}]]></Data>
+                </Cell>
+                <Cell>
+                    <Data ss:Type="String"><![CDATA[{{ creditmemo.billingAddress.firstname }} {{ creditmemo.billingAddress.lastname }}]]></Data>
+                </Cell>
+                <Cell>
+                    <Data ss:Type="String"><![CDATA[{{ creditmemo.state_name }}]]></Data>
+                </Cell>
+                <Cell>
+                    <Data ss:Type="Number"><![CDATA[{{ creditmemo.grand_total }}]]></Data>
+                </Cell>
+                <Cell>
+                    <Data ss:Type="String"><![CDATA[{{ creditmemo.order_status }}]]></Data>
+                </Cell>
+                <Cell>
+                    <Data ss:Type="String"><![CDATA[{{ creditmemo.store_name }}]]></Data>
+                </Cell>
+                <Cell>
+                    <Data ss:Type="String"><![CDATA[{{ creditmemo.billingAddress.street }} {{ creditmemo.billingAddress.city }} {{ creditmemo.billingAddress.postcode }} {{ creditmemo.billingAddress.telephone }}]]></Data>
+                </Cell>
+                <Cell>
+                    <Data ss:Type="String"><![CDATA[{{ creditmemo.shippingAddress.street }} {{ creditmemo.shippingAddress.city }} {{ creditmemo.shippingAddress.postcode }} {{ creditmemo.shippingAddress.telephone }}]]></Data>
+                </Cell>
+                <Cell>
+                    <Data ss:Type="String"><![CDATA[{{ creditmemo.customer_firstname }} {{ creditmemo.customer_lastname }}]]></Data>
+                </Cell>
+                <Cell>
+                    <Data ss:Type="String"><![CDATA[{{ creditmemo.customer_email }}]]></Data>
+                </Cell>
+                <Cell>
+                    <Data ss:Type="String"><![CDATA[{{ creditmemo.customer_group }}]]></Data>
+                </Cell>
+                <Cell>
+                    <Data ss:Type="String"><![CDATA[{{ creditmemo.payment_method }}]]></Data>
+                </Cell>
+                <Cell>
+                    <Data ss:Type="String"><![CDATA[{{ creditmemo.shipping_description }}]]></Data>
+                </Cell>
+                <Cell>
+                    <Data ss:Type="String"><![CDATA[{{ creditmemo.subtotal }}]]></Data>
+                </Cell>
+                <Cell>
+                    <Data ss:Type="Number"><![CDATA[{{ creditmemo.base_shipping_incl_tax }}]]></Data>
+                </Cell>
+                <Cell>
+                    <Data ss:Type="String"><![CDATA[{{ creditmemo.adjustment }}]]></Data>
+                </Cell>
+                <Cell>
+                    <Data ss:Type="String"><![CDATA[{{ creditmemo.adjustment_negative }}]]></Data>
+                </Cell>
+                <Cell>
+                    <Data ss:Type="Number"><![CDATA[{{ creditmemo.grand_total }}]]></Data>
+                </Cell>
+            </Row>
+        {% endfor %}
+    </Table>
+</Worksheet>
+</Workbook>',creditmemo_excel_xml,0,91d0221386baed5c990af7c26363ba38,creditmemo,'{"1540900677032_32":{"col_val":"{{ creditmemo.increment_id }}"},"1540900685438_438":{"col_val":"{{ creditmemo.order_id }}"},"1540900693672_672":{"col_val":"{{ creditmemo.created_at }}"},"1540900700421_421":{"col_val":"{{ creditmemo.order_date }}"},"1540900706208_208":{"col_val":"{{ creditmemo.order_status }}"},"1540900802104_104":{"col_val":"{{ creditmemo.store_name }}"},"1540900820079_79":{"col_val":"{{ creditmemo.customer_firstname }}"},"1540900828373_373":{"col_val":"{{ creditmemo.customer_lasttname }}"},"1540900834151_151":{"col_val":"{{ creditmemo.customer_email }}"},"1540900842414_414":{"col_val":"{{ creditmemo.customer_group }}"},"1540900860261_261":{"col_val":"{{ creditmemo.billingAddress.firstname }}"},"1540900874993_993":{"col_val":"{{ creditmemo.billingAddress.lastname }}"},"1540900939415_415":{"col_val":"{{ creditmemo.billingAddress.street }}"},"1540900946868_868":{"col_val":"{{ creditmemo.billingAddress.city }}"},"1540900952484_484":{"col_val":"{{ creditmemo.billingAddress.postcode }}"},"1540900960743_743":{"col_val":"{{ creditmemo.billingAddress.telephone }}"},"1540900966749_749":{"col_val":"{{ creditmemo.shippingAddress.firstname }}"},"1540901004563_563":{"col_val":"{{ creditmemo.shippingAddress.lastname }}"},"1540901016083_83":{"col_val":"{{ creditmemo.shippingAddress.street }}"},"1540901024345_345":{"col_val":"{{ creditmemo.shippingAddress.city }}"},"1540901034165_165":{"col_val":"{{ creditmemo.shippingAddress.postcode }}"},"1540901043259_259":{"col_val":"{{ creditmemo.shippingAddress.telephone }}"},"1540901052582_582":{"col_val":"{{ creditmemo.payment_method }}"},"1540901056600_600":{"col_val":"{{ creditmemo.shipping_description }}"},"1540901065753_753":{"col_val":"{{ creditmemo.base_shipping_incl_tax }}"},"1540901092748_748":{"col_val":"{{ creditmemo.subtotal }}"},"1540901103946_946":{"col_val":"{{ creditmemo.adjustment }}"},"1540901362585_585":{"col_val":"{{ creditmemo.adjustment_negative }}"},"1540901375766_766":{"col_val":"{{ creditmemo.tax_amount }}"},"1540901381360_360":{"col_val":"{{ creditmemo.grand_total }}"},"1540901389638_638":{"col_val":""}}',,,,,,,,0,0,1,creditmemo,1,excel_xml,0,0
+'Creditmemo JSON','{"type":"Magento\\CatalogRule\\Model\\Rule\\Condition\\Combine","attribute":null,"operator":null,"value":true,"is_value_processed":null,"aggregator":"all"}','{
+"credit_memos": [
+    {% for creditmemo in collection %}
+        {
+            "increment_id": "{{ creditmemo.increment_id | escape }}",
+            "order": "{{ creditmemo.order_id | escape }}",
+            "created_at": "{{ creditmemo.created_at | escape }}",
+            "order_date": "{{ creditmemo.order_date | escape }}",
+            "order_status": "{{ creditmemo.order_status | escape }}",
+            "store_name": "{{ creditmemo.store_name | escape }}",
+            "customer_name": "{{ creditmemo.customer_firstname | escape }} {{ creditmemo.customer_lastname | escape }}",
+            "customer_email": "{{ creditmemo.customer_email | escape }}",
+            "customer_group": "{{ creditmemo.customer_group | escape }}",
+            "bill_to_name": "{{ creditmemo.billingAddress.firstname | escape }} {{ creditmemo.billingAddress.lastname | escape }}",
+            "billing_address": "{{ creditmemo.billingAddress.street | escape }} {{ creditmemo.billingAddress.city | escape }} {{ creditmemo.billingAddress.postcode | escape }}",
+            "billing_telephone": "{{ creditmemo.billingAddress.telephone }}",
+            "ship_to_name": "{{ creditmemo.shippingAddress.firstname | escape }} {{ creditmemo.shippingAddress.lastname | escape }}",
+            "shipping_address": "{{ creditmemo.shippingAddress.street | escape }} {{ creditmemo.shippingAddress.city | escape }} {{ creditmemo.shippingAddress.postcode | escape }}",
+            "shipping_telephone": "{{ creditmemo.shippingAddress.telephone }}",
+            "payment_method": "{{ creditmemo.payment_method | escape }}",
+            "shipping_description": "{{ creditmemo.shipping_description | escape }}",
+            "base_shipping_incl_tax": "{{ creditmemo.base_shipping_incl_tax | escape }}",
+            "memo_total": {
+            "subtotal": "{{ creditmemo.subtotal | escape }}",
+            "base_shipping_incl_tax": "{{ creditmemo.base_shipping_incl_tax | escape }}",
+            "adjustment": "{{ creditmemo.adjustment | escape }}",
+            "adjustment_negative": "{{ creditmemo.adjustment_negative | escape }}",
+            "tax_amount": "{{ creditmemo.tax_amount | escape }}",
+            "grand_total": "{{ order.grand_total | escape }}",
+        },
+        "items": [
+            {% for item in creditmemo.items %}
+                {
+                    "name": "{{ item.name | escape }}",
+                    "sku": "{{ item.sku | escape }}",
+                    "price": "{{ item.price | escape }}",
+                    "qty": "{{ item.qty | escape }}",
+                    "base_row_total": "{{ item.base_row_total | escape }}",
+                    "tax_amount": "{{ item.tax_amount | escape }}",
+                    "discount_amount": "{{ item.discount_amount | escape }}",
+                    "row_total": "{{ item.row_total | escape }}",
+                },
+            {% endfor %}
+        ]
+        },
+    {% endfor %}
+]
+}',creditmemo_json,0,d34393a38511d7a69eb6f5c9d464fd3b,creditmemo,'{"1540900677032_32":{"col_val":"{{ creditmemo.increment_id }}"},"1540900685438_438":{"col_val":"{{ creditmemo.order_id }}"},"1540900693672_672":{"col_val":"{{ creditmemo.created_at }}"},"1540900700421_421":{"col_val":"{{ creditmemo.order_date }}"},"1540900706208_208":{"col_val":"{{ creditmemo.order_status }}"},"1540900802104_104":{"col_val":"{{ creditmemo.store_name }}"},"1540900820079_79":{"col_val":"{{ creditmemo.customer_firstname }}"},"1540900828373_373":{"col_val":"{{ creditmemo.customer_lasttname }}"},"1540900834151_151":{"col_val":"{{ creditmemo.customer_email }}"},"1540900842414_414":{"col_val":"{{ creditmemo.customer_group }}"},"1540900860261_261":{"col_val":"{{ creditmemo.billingAddress.firstname }}"},"1540900874993_993":{"col_val":"{{ creditmemo.billingAddress.lastname }}"},"1540900939415_415":{"col_val":"{{ creditmemo.billingAddress.street }}"},"1540900946868_868":{"col_val":"{{ creditmemo.billingAddress.city }}"},"1540900952484_484":{"col_val":"{{ creditmemo.billingAddress.postcode }}"},"1540900960743_743":{"col_val":"{{ creditmemo.billingAddress.telephone }}"},"1540900966749_749":{"col_val":"{{ creditmemo.shippingAddress.firstname }}"},"1540901004563_563":{"col_val":"{{ creditmemo.shippingAddress.lastname }}"},"1540901016083_83":{"col_val":"{{ creditmemo.shippingAddress.street }}"},"1540901024345_345":{"col_val":"{{ creditmemo.shippingAddress.city }}"},"1540901034165_165":{"col_val":"{{ creditmemo.shippingAddress.postcode }}"},"1540901043259_259":{"col_val":"{{ creditmemo.shippingAddress.telephone }}"},"1540901052582_582":{"col_val":"{{ creditmemo.payment_method }}"},"1540901056600_600":{"col_val":"{{ creditmemo.shipping_description }}"},"1540901065753_753":{"col_val":"{{ creditmemo.base_shipping_incl_tax }}"},"1540901092748_748":{"col_val":"{{ creditmemo.subtotal }}"},"1540901103946_946":{"col_val":"{{ creditmemo.adjustment }}"},"1540901362585_585":{"col_val":"{{ creditmemo.adjustment_negative }}"},"1540901375766_766":{"col_val":"{{ creditmemo.tax_amount }}"},"1540901381360_360":{"col_val":"{{ creditmemo.grand_total }}"},"1540901389638_638":{"col_val":""}}',,,,,,,,0,0,1,creditmemo,1,json,0,0
+'Shipment XML','{"type":"Magento\\CatalogRule\\Model\\Rule\\Condition\\Combine","attribute":null,"operator":null,"value":true,"is_value_processed":null,"aggregator":"all"}','<?xml version="1.0" encoding="utf-8" ?>
+<rss version="2.0" xmlns:g="http://base.google.com/ns/1.0">
+    <channel>
+        <title>Sale Order Shipment</title>
+        {% for shipment in collection %}
+            <shipment>
+                <increment_id><![CDATA[{{ shipment.increment_id }}]]></increment_id>
+                <order><![CDATA[{{ shipment.order_id }}]]></order>
+                <created_at><![CDATA[{{ shipment.created_at }}]]></created_at>
+                <order_date><![CDATA[{{ shipment.order_date }}]]></order_date>
+                <order_status><![CDATA[{{ shipment.order_status }}]]></order_status>
+                <store_name><![CDATA[{{ shipment.store_name }}]]></store_name>
+                <customer_name><![CDATA[{{ shipment.customer_firstname }} {{ shipment.customer_lastname }}]]></customer_name>
+                <customer_email><![CDATA[{{ shipment.customer_email }}]]></customer_email>
+                <customer_group><![CDATA[{{ shipment.customer_group }}]]></customer_group>
+                <bill_to_name><![CDATA[{{ shipment.billingAddress.firstname }} {{ shipment.billingAddress.lastname }}]]></bill_to_name>
+                <billing_address><![CDATA[{{ shipment.billingAddress.street }} {{ shipment.billingAddress.city }} {{ shipment.billingAddress.postcode }}]]></billing_address>
+                <billing_telephone><![CDATA[{{ shipment.billingAddress.telephone }}]]></billing_telephone>
+                <ship_to_name><![CDATA[{{ shipment.shippingAddress.firstname }} {{ shipment.shippingAddress.lastname }}]]></ship_to_name>
+                <shipping_address><![CDATA[{{ shipment.shippingAddress.street }} {{ shipment.shippingAddress.city }} {{ shipment.shippingAddress.postcode }}]]></shipping_address>
+                <shipping_telephone><![CDATA[{{ shipment.shippingAddress.telephone }}]]></shipping_telephone>
+                <payment_method><![CDATA[{{ shipment.payment_method }}]]></payment_method>
+                <shipping_description><![CDATA[{{ shipment.shipping_description }}]]></shipping_description>
+                <base_shipping_incl_tax><![CDATA[{{ shipment.base_shipping_incl_tax }}]]></base_shipping_incl_tax>
+                <total_qty><![CDATA[{{ shipment.total_qty }}]]></total_qty>
+                <order_total>
+                </order_total>
+                <items>
+                    {% for item in shipment.items %}
+                    <item>
+                        <name><![CDATA[{{ item.name }}]]></name>
+                        <sku><![CDATA[{{ item.sku }}]]></sku>
+                        <qty><![CDATA[{{ item.qty }}{{ item.qty }}]]></qty>
+                    </item>
+                    {% endfor %}
+                </items>
+            </shipment>
+        {% endfor %}
+    </channel>
+</rss>',shipment_xml,0,1ba9f70bfafabbe79a01391516f26c86,shipment,,,,,,,,,0,0,1,shipment,1,xml,0,0
+'Shipment CSV','{"type":"Magento\\CatalogRule\\Model\\Rule\\Condition\\Combine","attribute":null,"operator":null,"value":true,"is_value_processed":null,"aggregator":"all"}','',shipment_csv,0,c56b7415397fa5d51cd72794a7c347a8,shipment,'{"1540897316858_858":{"col_name":"Increment Id","col_type":"attribute","col_attr_val":"increment_id","col_pattern_val":"","col_val":"{{ shipment.increment_id }}"},"1540897338234_234":{"col_name":"Order Id","col_type":"attribute","col_attr_val":"order_id","col_pattern_val":"","col_val":"{{ shipment.order_id }}"},"1540897352623_623":{"col_name":"Created At","col_type":"attribute","col_attr_val":"created_at","col_pattern_val":"","col_val":"{{ shipment.created_at }}"},"1540897373897_897":{"col_name":"Order Date","col_type":"attribute","col_attr_val":"order_date","col_pattern_val":"","col_val":"{{ shipment.order_date }}"},"1540897379670_670":{"col_name":"Order Status","col_type":"attribute","col_attr_val":"order_status","col_pattern_val":"","col_val":"{{ shipment.order_status }}"},"1540897385199_199":{"col_name":"Store Name","col_type":"attribute","col_attr_val":"store_name","col_pattern_val":"","col_val":"{{ shipment.store_name }}"},"1540897394703_703":{"col_name":"Customer Firstname","col_type":"attribute","col_attr_val":"customer_firstname","col_pattern_val":"","col_val":"{{ shipment.customer_firstname }}"},"1540897402398_398":{"col_name":"Customer Lasttname","col_type":"attribute","col_attr_val":"customer_lasttname","col_pattern_val":"","col_val":"{{ shipment.customer_lasttname }}"},"1540897409927_927":{"col_name":"Customer Email","col_type":"attribute","col_attr_val":"customer_email","col_pattern_val":"","col_val":"{{ shipment.customer_email }}"},"1540897415967_967":{"col_name":"Customer Group","col_type":"attribute","col_attr_val":"customer_group","col_pattern_val":"","col_val":"{{ shipment.customer_group }}"},"1540897424303_303":{"col_name":"BillingAddress.Firstname","col_type":"attribute","col_attr_val":"billingAddress.firstname","col_pattern_val":"","col_val":"{{ shipment.billingAddress.firstname }}"},"1540897434413_413":{"col_name":"BillingAddress.Lastname","col_type":"attribute","col_attr_val":"billingAddress.lastname","col_pattern_val":"","col_val":"{{ shipment.billingAddress.lastname }}"},"1540897456928_928":{"col_name":"BillingAddress.Street","col_type":"attribute","col_attr_val":"billingAddress.street","col_pattern_val":"","col_val":"{{ shipment.billingAddress.street }}"},"1540897486859_859":{"col_name":"BillingAddress.City","col_type":"attribute","col_attr_val":"billingAddress.city","col_pattern_val":"","col_val":"{{ shipment.billingAddress.city }}"},"1540897495660_660":{"col_name":"BillingAddress.Postcode","col_type":"attribute","col_attr_val":"billingAddress.postcode","col_pattern_val":"","col_val":"{{ shipment.billingAddress.postcode }}"},"1540897505762_762":{"col_name":"BillingAddress.Telephone","col_type":"attribute","col_attr_val":"billingAddress.telephone","col_pattern_val":"","col_val":"{{ shipment.billingAddress.telephone }}"},"1540897525404_404":{"col_name":"ShippingAddress.Firstname","col_type":"attribute","col_attr_val":"shippingAddress.firstname","col_pattern_val":"","col_val":"{{ shipment.shippingAddress.firstname }}"},"1540897535444_444":{"col_name":"ShippingAddress.Lastname","col_type":"attribute","col_attr_val":"shippingAddress.lastname","col_pattern_val":"","col_val":"{{ shipment.shippingAddress.lastname }}"},"1540897543163_163":{"col_name":"ShippingAddress.Street","col_type":"attribute","col_attr_val":"shippingAddress.street","col_pattern_val":"","col_val":"{{ shipment.shippingAddress.street }}"},"1540897549057_57":{"col_name":"ShippingAddress.City","col_type":"attribute","col_attr_val":"shippingAddress.city","col_pattern_val":"","col_val":"{{ shipment.shippingAddress.city }}"},"1540897557482_482":{"col_name":"ShippingAddress.Postcode","col_type":"attribute","col_attr_val":"shippingAddress.postcode","col_pattern_val":"","col_val":"{{ shipment.shippingAddress.postcode }}"},"1540897564900_900":{"col_name":"ShippingAddress.Telephone","col_type":"attribute","col_attr_val":"shippingAddress.telephone","col_pattern_val":"","col_val":"{{ shipment.shippingAddress.telephone }}"},"1540897577586_586":{"col_name":"Payment Method","col_type":"attribute","col_attr_val":"payment_method","col_pattern_val":"","col_val":"{{ shipment.payment_method }}"},"1540897582433_433":{"col_name":"Shipping Description","col_type":"attribute","col_attr_val":"shipping_description","col_pattern_val":"","col_val":"{{ shipment.shipping_description }}"},"1540897592709_709":{"col_name":"Base Shipping Incl Tax","col_type":"attribute","col_pattern_val":"","col_val":""},"1540897735431_431":{"col_name":"Total Qty","col_type":"attribute","col_attr_val":"total_qty","col_pattern_val":"","col_val":"{{ shipment.total_qty }}"},"1540897746548_548":{"col_name":"","col_type":"item","col_attr_val":"0","col_pattern_val":"","col_val":"","items":{"1540897750645_645":{"name":"Name","value":"name"},"1540897763145_145":{"name":"Sku","value":"sku"},"1540897767609_609":{"name":"Qty","value":"qty"}}}}','comma','quotes',1,,,,,0,0,1,shipment,1,csv,0,0
+'Shipment Excel XML','{"type":"Magento\\CatalogRule\\Model\\Rule\\Condition\\Combine","attribute":null,"operator":null,"value":true,"is_value_processed":null,"aggregator":"all"}','<?xml version="1.0"?><?mso-application progid="Excel.Sheet"?>
+<Workbook xmlns="urn:schemas-microsoft-com:office:spreadsheet" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:x="urn:schemas-microsoft-com:office:excel" xmlns:x2="http://schemas.microsoft.com/office/excel/2003/xml" xmlns:ss="urn:schemas-microsoft-com:office:spreadsheet" xmlns:o="urn:schemas-microsoft-com:office:office" xmlns:html="http://www.w3.org/TR/REC-html40" xmlns:c="urn:schemas-microsoft-com:office:component:spreadsheet">
+<OfficeDocumentSettings xmlns="urn:schemas-microsoft-com:office:office"></OfficeDocumentSettings>
+<ExcelWorkbook xmlns="urn:schemas-microsoft-com:office:excel"></ExcelWorkbook>
+<Worksheet ss:Name="sales_order_grid.xml">
+<Table>
+<Row>
+<Cell>
+<Data ss:Type="String">Shipment</Data>
+</Cell>
+<Cell>
+<Data ss:Type="String">Ship Date</Data>
+</Cell>
+<Cell>
+<Data ss:Type="String">Order</Data>
+</Cell>
+<Cell>
+<Data ss:Type="String">Order Date</Data>
+</Cell>
+<Cell>
+<Data ss:Type="String">Ship-to Name</Data>
+</Cell>
+<Cell>
+<Data ss:Type="String">Total Quantity</Data>
+</Cell>
+<Cell>
+<Data ss:Type="String">Order Status</Data>
+</Cell>
+<Cell>
+<Data ss:Type="String">Purchased From</Data>
+</Cell>
+<Cell>
+<Data ss:Type="String">Customer Name</Data>
+</Cell>
+<Cell>
+<Data ss:Type="String">Email</Data>
+</Cell>
+<Cell>
+<Data ss:Type="String">Customer Group</Data>
+</Cell>
+<Cell>
+<Data ss:Type="String">Billing Address</Data>
+</Cell>
+<Cell>
+<Data ss:Type="String">Shipping Address</Data>
+</Cell>
+<Cell>
+<Data ss:Type="String">Payment Method</Data>
+</Cell>
+<Cell>
+<Data ss:Type="String">Shipping Information</Data>
+</Cell>
+</Row>
+{% for shipment in collection %}
+<Row>
+<Cell>
+<Data ss:Type="String"><![CDATA[{{ shipment.increment_id }}]]></Data>
+</Cell>
+<Cell>
+<Data ss:Type="String"><![CDATA[{{ shipment.created_at }}]]></Data>
+</Cell>
+<Cell>
+<Data ss:Type="String"><![CDATA[{{ shipment.order_id }}]]></Data>
+</Cell>
+<Cell>
+<Data ss:Type="String"><![CDATA[{{ shipment.order_date }}]]></Data>
+</Cell>
+<Cell>
+<Data ss:Type="String"><![CDATA[{{ shipment.shippingAddress.firstname }} {{ shipment.shippingAddress.lastname }}]]></Data>
+</Cell>
+<Cell>
+<Data ss:Type="Number"><![CDATA[{{ shipment.total_qty }}]]></Data>
+</Cell>
+<Cell>
+<Data ss:Type="String"><![CDATA[{{ shipment.order_status }}]]></Data>
+</Cell>
+<Cell>
+<Data ss:Type="String">{{ shipment.store_name }}</Data>
+</Cell>
+<Cell>
+<Data ss:Type="String"><![CDATA[{{ shipment.customer_firstname }} {{ shipment.customer_lastname }}]]></Data>
+</Cell>
+<Cell>
+<Data ss:Type="String"><![CDATA[{{ shipment.customer_email }}]]></Data>
+</Cell>
+<Cell>
+<Data ss:Type="Number"><![CDATA[{{ shipment.customer_group }}]]></Data>
+</Cell>
+<Cell>
+<Data ss:Type="String"><![CDATA[{{ shipment.billingAddress.street }} {{ shipment.billingAddress.city }} {{ shipment.billingAddress.postcode }} {{ shipment.billingAddress.telephone }}]]></Data>
+</Cell>
+<Cell>
+<Data ss:Type="String"><![CDATA[{{ shipment.shippingAddress.street }} {{ shipment.shippingAddress.city }} {{ shipment.shippingAddress.postcode }} {{ shipment.shippingAddress.telephone }}]]></Data>
+</Cell>
+<Cell>
+<Data ss:Type="String"><![CDATA[{{ shipment.payment_method }}]]></Data>
+</Cell>
+<Cell>
+<Data ss:Type="String"><![CDATA[{{ shipment.shipping_description }}]]></Data>
+</Cell>
+</Row>
+{% endfor %}
+</Table>
+</Worksheet>
+</Workbook>',shipment_excel_xml,0,88662caa975a65b6a40014203d747626,shipment,'{"1540897316858_858":{"col_val":"{{ shipment.increment_id }}"},"1540897338234_234":{"col_val":"{{ shipment.order_id }}"},"1540897352623_623":{"col_val":"{{ shipment.created_at }}"},"1540897373897_897":{"col_val":"{{ shipment.order_date }}"},"1540897379670_670":{"col_val":"{{ shipment.order_status }}"},"1540897385199_199":{"col_val":"{{ shipment.store_name }}"},"1540897394703_703":{"col_val":"{{ shipment.customer_firstname }}"},"1540897402398_398":{"col_val":"{{ shipment.customer_lasttname }}"},"1540897409927_927":{"col_val":"{{ shipment.customer_email }}"},"1540897415967_967":{"col_val":"{{ shipment.customer_group }}"},"1540897424303_303":{"col_val":"{{ shipment.billingAddress.firstname }}"},"1540897434413_413":{"col_val":"{{ shipment.billingAddress.lastname }}"},"1540897456928_928":{"col_val":"{{ shipment.billingAddress.street }}"},"1540897486859_859":{"col_val":"{{ shipment.billingAddress.city }}"},"1540897495660_660":{"col_val":"{{ shipment.billingAddress.postcode }}"},"1540897505762_762":{"col_val":"{{ shipment.billingAddress.telephone }}"},"1540897525404_404":{"col_val":"{{ shipment.shippingAddress.firstname }}"},"1540897535444_444":{"col_val":"{{ shipment.shippingAddress.lastname }}"},"1540897543163_163":{"col_val":"{{ shipment.shippingAddress.street }}"},"1540897549057_57":{"col_val":"{{ shipment.shippingAddress.city }}"},"1540897557482_482":{"col_val":"{{ shipment.shippingAddress.postcode }}"},"1540897564900_900":{"col_val":"{{ shipment.shippingAddress.telephone }}"},"1540897577586_586":{"col_val":"{{ shipment.payment_method }}"},"1540897582433_433":{"col_val":"{{ shipment.shipping_description }}"},"1540897592709_709":{"col_val":""},"1540897735431_431":{"col_val":"{{ shipment.total_qty }}"},"1540897746548_548":{"col_val":""}}',,,,,,,,0,0,1,shipment,1,excel_xml,0,0
+'Shipment JSON','{"type":"Magento\\CatalogRule\\Model\\Rule\\Condition\\Combine","attribute":null,"operator":null,"value":true,"is_value_processed":null,"aggregator":"all"}','{
+"shipments": [
+    {% for shipment in collection %}
+        {
+            "increment_id": "{{ shipment.increment_id | escape }}",
+            "order": "{{ shipment.order_id | escape }}",
+            "created_at": "{{ shipment.created_at | escape }}",
+            "order_date": "{{ shipment.order_date | escape }}",
+            "order_status": "{{ shipment.order_status | escape }}",
+            "store_name": "{{ shipment.store_name | escape }}",
+            "customer_name": "{{ shipment.customer_firstname | escape }} {{ shipment.customer_lastname | escape }}",
+            "customer_email": "{{ shipment.customer_email | escape }}",
+            "customer_group": "{{ shipment.customer_group | escape }}",
+            "bill_to_name": "{{ shipment.billingAddress.firstname | escape }} {{ shipment.billingAddress.lastname | escape }}",
+            "billing_address": "{{ shipment.billingAddress.street | escape }} {{ shipment.billingAddress.city | escape }} {{ shipment.billingAddress.postcode | escape }}",
+            "billing_telephone": "{{ shipment.billingAddress.telephone }}",
+            "ship_to_name": "{{ shipment.shippingAddress.firstname | escape }} {{ shipment.shippingAddress.lastname | escape }}",
+            "shipping_address": "{{ shipment.shippingAddress.street | escape }} {{ shipment.shippingAddress.city | escape }} {{ shipment.shippingAddress.postcode | escape }}",
+            "shipping_telephone": "{{ shipment.shippingAddress.telephone }}",
+            "payment_method": "{{ shipment.payment_method | escape }}",
+            "shipping_description": "{{ shipment.shipping_description | escape }}",
+            "base_shipping_incl_tax": "{{ shipment.base_shipping_incl_tax | escape }}",
+            "total_qty": "{{ shipment.total_qty | escape }}",
+            "order_total": {},
+            "items": [
+                {% for item in shipment.items %}
+                    {
+                        "name": "{{ item.name | escape }}",
+                        "sku": "{{ item.sku | escape }}",
+                        "qty": "{{ item.qty | escape }}",
+                    },
+                {% endfor %}
+            ]
+        },
+    {% endfor %}
+]
+}',shipment_json,0,cc7181702649d3cc6ffedf9b2b35528f,shipment,,,,,,,,,0,0,1,shipment,1,json,0,0

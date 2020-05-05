@@ -27,7 +27,7 @@ use Magento\Framework\Setup\UninstallInterface;
 
 /**
  * Class Uninstall
- * @package Mageplaza\FreeShippingBarSampleData\Setup
+ * @package Mageplaza\OrderExportSampleData\Setup
  */
 class Uninstall implements UninstallInterface
 {

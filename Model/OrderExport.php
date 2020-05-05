@@ -26,6 +26,8 @@ use Magento\Framework\File\Csv;
 use Magento\Framework\Filesystem\Driver\File;
 use Magento\Framework\Setup\SampleData\Context as SampleDataContext;
 use Magento\Framework\Setup\SampleData\FixtureManager;
+use Magento\Sales\Model\ResourceModel\Order\CollectionFactory;
+use Mageplaza\OrderExport\Helper\Data;
 use Mageplaza\OrderExport\Model\ProfileFactory;
 
 /**
@@ -52,24 +54,38 @@ class OrderExport
     /**
      * @var File
      */
-    private $file;
+    protected $file;
+    /**
+     * @var CollectionFactory
+     */
+    protected $orderCollectionFactory;
+    /**
+     * @var Data
+     */
+    protected $helperData;
 
     /**
      * FreeShippingBar constructor.
      *
      * @param SampleDataContext $sampleDataContext
      * @param File $file
+     * @param CollectionFactory $orderCollectionFactory
      * @param ProfileFactory $profileFactory
+     * @param Data $helperData
      */
     public function __construct(
         SampleDataContext $sampleDataContext,
         File $file,
-        ProfileFactory $profileFactory
+        CollectionFactory $orderCollectionFactory,
+        ProfileFactory $profileFactory,
+        Data $helperData
     ) {
         $this->fixtureManager         = $sampleDataContext->getFixtureManager();
         $this->csvReader              = $sampleDataContext->getCsvReader();
         $this->file                   = $file;
         $this->profileFactory = $profileFactory;
+        $this->orderCollectionFactory = $orderCollectionFactory;
+        $this->helperData = $helperData;
     }
 
     /**
@@ -79,6 +95,7 @@ class OrderExport
      */
     public function install(array $fixtures)
     {
+        $firstOrderId = $this->orderCollectionFactory->create()->getFirstItem()->getId();
         foreach ($fixtures as $fileName) {
             $fileName = $this->fixtureManager->getFixture($fileName);
             if (!$this->file->isExists($fileName)) {
@@ -95,9 +112,11 @@ class OrderExport
                 }
                 $row = $data;
 
-                $this->profileFactory->create()
+                $profile = $this->profileFactory->create()
                     ->addData($row)
                     ->save();
+                $profile->setMatchingIds([$firstOrderId]);
+                $this->helperData->generateProfile($profile, true);
             }
         }
     }
